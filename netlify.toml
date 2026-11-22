@@ -1,3 +1,8 @@
+# The site is a single static page (no framework, no package manager, no
+# dependencies to install). Its source is shipped as a .zip archive in the
+# repository root, so the build step unpacks it and Netlify publishes the
+# extracted folder. The archive is located by pattern, so renaming or replacing
+# it (e.g. my-ebook-library-v2-mvp.zip) doesn't break the build.
 [build]
-  command = "mkdir -p dist && ZIP_FILE=$(find . -maxdepth 1 -type f -name '*.zip' -print -quit) && test -n \"$ZIP_FILE\" && unzip -o \"$ZIP_FILE\" -d dist && test -f dist/my-ebook-library/index.html"
+  command = "rm -rf dist && mkdir -p dist && ZIP_FILE=$(find . -maxdepth 1 -type f -name '*.zip' -print -quit) && test -n \"$ZIP_FILE\" && unzip -q -o \"$ZIP_FILE\" -d dist && test -f dist/my-ebook-library/index.html"
   publish = "dist/my-ebook-library"
